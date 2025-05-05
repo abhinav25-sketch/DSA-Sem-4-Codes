@@ -1,0 +1,110 @@
+class SetADT: 
+    def __init__(self): 
+        self.elements = [] 
+ 
+    def add(self, element): 
+        if not self.contains(element): 
+            self.elements.append(element) 
+ 
+    def remove(self, element): 
+        if self.contains(element): 
+            self.elements.remove(element) 
+        else: 
+            print(f"Element {element} not found in the set!") 
+ 
+    def contains(self, element): 
+        return element in self.elements 
+ 
+    def size(self): 
+        return len(self.elements) 
+ 
+    def iterator(self): 
+        return iter(self.elements) 
+ 
+    def intersection(self, other_set): 
+        return SetADT.from_list([element for element in self.elements if other_set.contains(element)]) 
+ 
+    def union(self, other_set): 
+        new_set = SetADT() 
+        for element in self.elements: 
+            new_set.add(element) 
+        for element in other_set.elements: 
+            new_set.add(element) 
+        return new_set 
+ 
+    def difference(self, other_set): 
+        return SetADT.from_list([element for element in self.elements if not 
+other_set.contains(element)]) 
+         
+ 
+    def subset(self, other_set): 
+        return all(self.contains(element) for element in self.elements) 
+ 
+    @staticmethod 
+    def from_list(elements): 
+        new_set = SetADT() 
+        for element in elements: 
+            new_set.add(element) 
+        return new_set 
+ 
+def menu(): 
+    set1 = SetADT() 
+    set2 = SetADT() 
+ 
+    while True: 
+        print("\n--- Menu ---") 
+        print("1. Add element to set1") 
+        print("2. Add element to set2") 
+        print("3. Remove element from set1") 
+        print("4. Remove element from set2") 
+        print("5. Check if element exists in set1") 
+        print("6. Check if element exists in set2") 
+        print("7. Perform union of set1 and set2") 
+        print("8. Perform intersection of set1 and set2") 
+        print("9. Perform difference (set1 - set2)") 
+        print("10. Check if set1 is a subset of set2") 
+        print("11. Display elements of set1") 
+        print("12. Display elements of set2") 
+        print("13. Exit") 
+ 
+        choice = input("Enter your choice: ") 
+ 
+        if choice == '1': 
+            element = int(input("Enter element to add to set1: ")) 
+            set1.add(element) 
+        elif choice == '2': 
+            element = int(input("Enter element to add to set2: ")) 
+            set2.add(element) 
+        elif choice == '3': 
+            element = int(input("Enter element to remove from set1: ")) 
+            set1.remove(element) 
+        elif choice == '4': 
+            element = int(input("Enter element to remove from set2: ")) 
+            set2.remove(element) 
+        elif choice == '5': 
+            element = int(input("Enter element to check in set1: ")) 
+            print("Element exists in set1?" , set1.contains(element)) 
+        elif choice == '6': 
+            element = int(input("Enter element to check in set2: ")) 
+            print("Element exists in set2?", set2.contains(element)) 
+        elif choice == '7': 
+            union_set = set1.union(set2) 
+            print("Union of set1 and set2:", list(union_set.iterator())) 
+        elif choice == '8': 
+            intersection_set = set1.intersection(set2) 
+            print("Intersection of set1 and set2:", list(intersection_set.iterator())) 
+        elif choice == '9': 
+            difference_set = set1.difference(set2) 
+            print("Difference (set1 - set2):", list(difference_set.iterator())) 
+        elif choice == '10': 
+            print("Is set1 a subset of set2?", set1.subset(set2)) 
+        elif choice == '11': 
+            print("Elements in set1:", list(set1.iterator())) 
+        elif choice == '12': 
+            print("Elements in set2:", list(set2.iterator())) 
+elif choice == '13': 
+print("Exiting...") 
+break 
+else: 
+print("Invalid choice! Please try again.") 
+menu( )
